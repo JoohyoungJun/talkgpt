@@ -1,4 +1,5 @@
 // src/components/ChatMessage.tsx
+import './ChatMessage.css';
 interface Props {
     role: 'user' | 'bot';
     content: string;

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 function Navbar() {
     return (
-        <nav style={{ display: 'flex', gap: '1rem', padding: '10px', backgroundColor: '#eee' }}>
-            <Link to="/"> Main</Link>
-            <Link to="/mypage"> My Page</Link>
+        <nav className='navbar'>
+            <Link to="/" className='navbar-link'> Main</Link>
+            <Link to="/mypage" className='navbar-link'> My Page</Link>
         </nav>
     );
 }

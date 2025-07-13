@@ -1,0 +1,64 @@
+/* src/pages/Mainpage.css */
+
+.mainpage-container {
+    margin-top: 60px;
+    background-color: #f9f9f9;
+    height: calc(100vh - 60px);
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainpage-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.mainpage-chat-window {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.mainpage-input-area { 
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 8px;
+}
+
+.mainpage-input-area input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.mainpage-input-area buttom {
+    padding :10px 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: background-color 0.2s;
+}
+
+.mainpage-input-area buttom:hover {
+    background-color: #0056b3;
+}

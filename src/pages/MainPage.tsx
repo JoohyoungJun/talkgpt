@@ -1,6 +1,7 @@
 // src/pages/MainPage.tsx
 import { useState } from 'react';
 import ChatMessage from '../components/ChatMessage';
+import './MainPage.css';
 
 interface Message {
     role: 'user' | 'bot';
@@ -22,8 +23,8 @@ function MainPage() {
     };
 
     return (
-        <div className='app-container'>
-            <h1>TalkGPT</h1>
+        <div className='mainpage-container'>
+            <h1 className='mainpage-title'>TalkGPT</h1>
             <div className='mainpage-chat-window'>
                 {messages.map((msg, idx) => (
                     <ChatMessage key={idx} role={msg.role} content={msg.content} />
