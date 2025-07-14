@@ -1,11 +1,42 @@
 // src/pages/MainPage.tsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ChatMessage from '../components/ChatMessage';
 import './MainPage.css';
 
 interface Message {
     role: 'user' | 'bot';
     content: string;
+}
+
+const fetchGPTReply = async (userInput: string): Promise<string> => {
+    const apikey = import.meta.env.VITE_OPENAI_API_KEY;
+
+    console.log("API_Key: ", import.meta.env.VITE_OPENAI_API_KEY);
+
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apikey}`,
+        },
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+                { role: "system", content: "You are a helpful assistant."},
+                { role: "user", content: userInput },
+            ],
+            temperature: 0.7,
+        }),
+    });
+
+    if (!response.ok) {
+        const errtxt = await response.text();
+        console.error("GPT 호출 실패: ", response.status, errtxt);
+        return "오류가 발생했습니다.";
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content ?? "오류가 발생했습니다.";
 }
 
 function MainPage() {
@@ -15,11 +46,18 @@ function MainPage() {
     
     const [input, setInput] = useState('');
 
-    const handleSend = () => {
-        if(input.trim() === '') return;
-        const newMessage: Message = { role: 'user', content: input};
-        setMessages([...messages, newMessage]);
-        setInput('');
+    const handleSend = async () => {
+        if(input.trim() === "") return;
+        const newMessage: Message = { role: 'user', content: input };
+        setMessages(prev => [...prev, newMessage]);
+        setInput("");
+
+        //get response from GPT
+        const botReply = await fetchGPTReply(input);
+        const botMessage: Message = { role: "bot", content: botReply };
+
+
+        setMessages(prev => [...prev, botMessage]);
     };
 
     return (
