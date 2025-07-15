@@ -8,35 +8,37 @@ interface Message {
     content: string;
 }
 
-const fetchGPTReply = async (userInput: string): Promise<string> => {
-    const apikey = import.meta.env.VITE_OPENAI_API_KEY;
+const fetchGeminiReply = async (userInput: string): Promise<string> => {
+    const apikey = import.meta.env.VITE_GEMINI_API_KEY;
 
-    console.log("API_Key: ", import.meta.env.VITE_OPENAI_API_KEY);
+    console.log("API_Key: ", import.meta.env.VITE_GEMINI_API_KEY);
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apikey}`,
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [
-                { role: "system", content: "You are a helpful assistant."},
-                { role: "user", content: userInput },
-            ],
-            temperature: 0.7,
-        }),
-    });
+    const response = await fetch (
+        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-002:generateContent?key=${apikey}`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: userInput }]
+                    }
+                ],
+            }),
+        }
+    );
 
     if (!response.ok) {
         const errtxt = await response.text();
-        console.error("GPT 호출 실패: ", response.status, errtxt);
+        console.error("잼민이 호출 실패: ", response.status, errtxt);
         return "오류가 발생했습니다.";
     }
 
     const data = await response.json();
-    return data.choices?.[0]?.message?.content ?? "오류가 발생했습니다.";
+    return data.candidates?.[0]?.content?.parts?.[0]?.text ?? "오류가 발생했습니다.";
 }
 
 function MainPage() {
@@ -52,8 +54,8 @@ function MainPage() {
         setMessages(prev => [...prev, newMessage]);
         setInput("");
 
-        //get response from GPT
-        const botReply = await fetchGPTReply(input);
+        //get response from Gemini
+        const botReply = await fetchGeminiReply(input);
         const botMessage: Message = { role: "bot", content: botReply };
 
 
