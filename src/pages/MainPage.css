@@ -31,6 +31,10 @@
     margin-bottom: 20px;
 }
 
+.mainpage-warning-message {
+    font-size: x-small;
+}
+
 .mainpage-input-area { 
     width: 100%;
     max-width: 600px;

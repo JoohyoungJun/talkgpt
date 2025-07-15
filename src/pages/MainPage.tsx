@@ -70,6 +70,7 @@ function MainPage() {
                     <ChatMessage key={idx} role={msg.role} content={msg.content} />
                 ))}
             </div>
+            <p className='mainpage-warning-message'> Talk GPT는 실수를 할 수 있습니다. 중요한 정보는 재차 확인하세요.</p>
             <div className='mainpage-input-area'>
                 <input
                     type="text"
