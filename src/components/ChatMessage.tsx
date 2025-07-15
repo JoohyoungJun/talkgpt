@@ -7,10 +7,13 @@ interface Props {
 
 function ChatMessage({ role, content }: Props) {
     const isUser = role ==='user';
+    const prefix = isUser? 'Me' : 'Bot';
 
     return (
         <div className={`message ${isUser ? 'user' : 'bot'}`}>
-            <div className="bubble">{content}</div>
+            <div className="bubble">
+                { `${prefix}: ${content}` }
+            </div>
         </div>
     );
 }
